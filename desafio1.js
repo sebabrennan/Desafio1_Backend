@@ -15,16 +15,18 @@ class ProductManager {
         }
         
         if (title, description, price, thumbnail, code, stock) {            
-            const productsCheck = []
-            productsCheck.push(product)
-            const productsCheckSome = productsCheck.some((product)=>product.code === code)
-            //console.log(productsCheck.some((product)=>product.code === code));
-            if(productsCheckSome) return console.log("No es posible agregar ese producto")
+            if(this.products.some((product)=>product.code === code)){
+                console.error("No es posible agregar ese producto: código repetido");
+                return false
+            }
+            else{
+                this.products.push(product);
+                return true
+            }    
         }else{
-            return this.products.push(product);
+            console.error("Todos los campos son obligatorios")
+            return false
         }
-        //if(this.products.some((product)=>product.code ==! code))
-        //console.log(this.product.some((product)=>product.code ==! code));
     }
 
     #initId(){
@@ -46,7 +48,9 @@ class ProductManager {
 const productManager = new ProductManager()
 
 productManager.addProduct("REMERA HIGH PLEASURE", "Remera manga corta con cuello redondo", 29000, "https://acdn.mitiendanube.com/stores/001/343/102/products/tezza-90321-c88ac45352b76c5a7c16700049342456-640-0.webp,", 4, 1)
-productManager.addProduct("REMERA SMILE", "Fresca y cómoda para el verano, su tela permite que el pase del aire muy facilimente", 29000, "https://acdn.mitiendanube.com/stores/001/343/102/products/tezza-15361-b5442d7cbc68f9a81516700036167374-480-0.webp", 4, 3)
+productManager.addProduct("REMERA SMILE", "Fresca y cómoda para el verano, su tela permite que el pase del aire muy facilimente", 29000, "https://acdn.mitiendanube.com/stores/001/343/102/products/tezza-15361-b5442d7cbc68f9a81516700036167374-480-0.webp", 3, 3)
+productManager.addProduct("REMERA SMILE", "Fresca y cómoda para el verano, su tela permite que el pase del aire muy facilimente", 29000, "https://acdn.mitiendanube.com/stores/001/343/102/products/tezza-15361-b5442d7cbc68f9a81516700036167374-480-0.webp", 5, 3)
+
 productManager.addProduct()
 
 console.log(productManager.getProducts());
